@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="stylesheet" href="css/normalize.min.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <!-- Blocks styles -->
+    <link rel="stylesheet" href="../../../source/calendar/styles.css" />
+
+    <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="js/vendor/jquery.highlight-4.closure.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9AGdrkxDdrPBf3IGTmXVsWQ6iE-ARAJg&v=3.exp&sensor=true&libraries=places"></script>
+
+    <!-- Blocks includes -->
+    <script src="../../../source/blocks.core.js"></script>
+    <script src="../../../source/blocks.mvvm.js"></script>
+    <script src="../../../source/blocks.query.effects.js"></script>
+    <script src="../../../source/blocks.ui.core.js"></script>
+    <script src="../../../source/calendar/blocks.calendar.js"></script>
+
+    <script src="js/main.js"></script>
+</head>
+<body>
+    <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+    <div class="header-container">
+        <header class="wrapper clearfix">
+            <section class="title">
+                <input data-query="value(searchText)" class="search" type="text" placeholder="Search & Create" autofocus />
+                <input class="add-new" type="button" value="Create New" />
+            </section>
+            <nav>
+                <ul style="display: none;">
+                    <li><a href="#">nav ul li a</a></li>
+                    <li><a href="#">nav ul li a</a></li>
+                    <li><a href="#">nav ul li a</a></li>
+                </ul>
+            </nav>
+        </header>
+    </div>
+
+    <div class="main-container">
+        <div class="main wrapper clearfix">
+            <section>
+                
+                <ul data-query="with(newTask).slideDown(newTask.display(), 500)" class="tasks">
+                    <!-- New Task -->
+                    <li data-query="addClass('task-selected', selected).attr('data-task-id', id)" class="task task-new">
+                        <span class="countdown">
+                            <span class="countdown-progress"></span>
+                        </span>
+                        <span class="tag-icon"></span>
+                        <span data-query="attr('class', 'priority ' + priority())"></span>
+                        <span class="status">
+                            <input type="checkbox" /></span>
+                        <span class="delimiter"></span>
+                        <span class="category category-task"></span>
+                        <span class="text"><span class="text-new">(New)</span> <span data-query="text(title)"></span></span>
+                        <div class="task-right-part">
+                            <input type="submit" class="calendar-icon" />
+                            <span class="time-remaining">7 days left</span>
+                            <span class="delimiter"></span>
+                            <input type="submit" class="location-icon" />
+                            <span class="location">NBU University</span>
+                        </div>
+                        <span class="expand-collapse-icon"></span>
+                        <span class="tags">
+                            <span class="tag">University</span>
+                            <span class="tag">Important</span>
+                            <span class="tag">Exam</span>
+                        </span>
+                    </li>
+                    <!-- # New Task -->
+                    <!-- New Task Details -->
+                    <li data-query="slideDown(expanded, 500)" class="task task-new">
+                        <div class="holder">
+                            Category:
+                            <select>
+                                <option>Task</option>
+                                <option>Link</option>
+                            </select>
+                        </div>
+                        <div data-query="click($model._onChangePriorityClick)" class="holder">
+                            <span>Priority:</span>
+                            <span data-query="addClass('priority-selected', priority() === 'high').attr('data-priority', 'high')" class="priority-high"></span>
+                            <span data-query="addClass('priority-selected', priority() === 'normal').attr('data-priority', 'normal')" class="priority-normal"></span>
+                            <span data-query="addClass('priority-selected', priority() === 'low').attr('data-priority', 'low')" class="priority-low"></span>
+                        </div>
+                        <!-- Date & Time (Calendar) -->
+                        <div class="holder set-time">
+                            Specify time:
+                            <span data-query="text(dateTime() ? dateTime().toLocaleDateString() : 'Not Set')"></span>
+                            <div class="calendar" data-query="calendar()"></div>
+                        </div>
+                        <!-- Location (Google Maps) -->
+                        <div class="holder set-location">
+                            Location:
+                            <input class="set-location-input" type="text" />
+                            <div class="map"></div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div>
+                            <input data-query="click($model._onAddNewTaskClick)" type="button" value="Add" />
+                            <input type="button" value="Add & Share" />
+                            <input data-query="click($model._onCancelNewTaskClick)" type="button" value="Cancel" />
+                        </div>
+                    </li>
+                    <!-- # New Task Details -->
+                </ul>
+                <div data-query="visible(newTask.display())" class="task-new-delimiter"></div>
+
+
+
+                <!-- All Tasks -->
+                <ul class="tasks" data-query="each(tasks)">
+                    <!-- Task -->
+                    <li data-query="visible(display).addClass('task-selected', selected).attr('data-task-id', id)" class="task task-created">
+                        <span class="countdown">
+                            <span class="countdown-progress"></span>
+                        </span>
+                        <span class="tag-icon"></span>
+                        <span data-query="addClass(priority)" class="priority"></span>
+                        <span class="status">
+                            <input data-query="checked(completed)" type="checkbox" /></span>
+                        <span class="delimiter"></span>
+                        <span class="category category-task"></span>
+                        <span data-query="text(title)" class="text"></span>
+                        <div class="task-right-part">
+                            <!-- Date & Time -->
+                            <span data-query="visible(dateTime)">
+                                <input type="submit" class="calendar-icon" />
+                                <span data-query="text(timeLeft())" class="time-remaining"></span>
+                            </span>
+
+                            <!-- Location -->
+                            <span data-query="visible(location)">
+                                <span class="delimiter"></span>
+                                <input type="submit" class="location-icon" />
+                                <span data-query="text(location)" class="location"></span>
+                            </span>
+                        </div>
+                        <span class="expand-collapse-icon"></span>
+                        <span data-query="each(tags)" class="tags">
+                            <span data-query="text($this)" class="tag"></span>
+                        </span>
+                    </li>
+                    <li data-query="slideDown(expanded, 500)">Details
+                    </li>
+                    <!-- #Task -->
+                </ul>
+            </section>
+
+            <aside>
+                <div>
+                    <h3>Calendar</h3>
+                    <div class="main-calendar" data-query="calendar({mode: 'view-only', selectedDate: new Date()})"></div>
+                    <h3>Locations</h3>
+                    <div class="main-map"></div>
+                </div>
+            </aside>
+
+        </div>
+        <!-- #main -->
+    </div>
+    <!-- #main-container -->
+
+    <div class="footer-container">
+        <footer class="wrapper">
+            <h3>Up To Ten</h3>
+        </footer>
+    </div>
+
+    <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
+    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+
+    <script>
+        var _gaq = [['_setAccount', 'UA-XXXXX-X'], ['_trackPageview']];
+        (function (d, t) {
+            var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
+            g.src = ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g, s)
+        }(document, 'script'));
+    </script>
+</body>
+</html>
