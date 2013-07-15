@@ -1,5 +1,4 @@
 C:\Users\anton_000\Documents\GitHub\UpToTen\bin\WebApplication1.dll
 C:\Users\anton_000\Documents\GitHub\UpToTen\bin\WebApplication1.pdb
-C:\Users\anton_000\Documents\GitHub\UpToTen\obj\Debug\WebApplication1.csprojResolveAssemblyReference.cache
 C:\Users\anton_000\Documents\GitHub\UpToTen\obj\Debug\WebApplication1.dll
 C:\Users\anton_000\Documents\GitHub\UpToTen\obj\Debug\WebApplication1.pdb
